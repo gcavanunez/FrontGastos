@@ -1,0 +1,154 @@
+<div class="container pagecontainer">
+    <div class="card">
+        <div class="page-header card-header">
+            <h1>Reporte de Gastos</h1>
+        </div>
+    
+        <div class="panel panel-info card-body">
+            <div class="panel-heading">
+                <h3 class="panel-title">Mostrar Reporte</h3>
+            </div>
+            <div class="panel-body">
+                <form [formGroup]="reportForm" (ngSubmit)="getReport(reportForm.value)" class="form-horizontal" novalidate autocomplete="off">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12">
+                        <table class="table">
+                          <thead>
+                          <tr>
+                            <th>Linea de Tiempo</th>
+                            <th>Selecion</th>
+    
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr class="success">
+                            <td>
+                              Este Mes
+                            </td>
+                            <td> <span><input type="radio" name="report" value="opt1" [formControl]="report" checked></span></td>
+    
+                          </tr>
+                          <tr class="info">
+                            <td> Rango de Fechas</td>
+                            <td><span><input type="radio" name="report" value="opt2" [formControl]="report"></span></td>
+                          </tr>
+                          <tr class="info">
+                            <td>Fecha inicial</td>
+                            <td>
+    
+                              <!--<div class="col-sm-12 col-md-6">-->
+                              <div class="form-group" style="margin-right:0" [ngClass]="{'has-error': reportForm.get('startdt').invalid && reportForm.get('startdt').dirty}">
+                                <div class="input-group">
+                                  <div class="input-group-addon"><i class="material-icons">looks_one</i></div>
+                                  <input type="date" class="form-control" [formControl]="startdt" placeholder="Start Date">
+                                </div>
+                                <div class="text-danger" *ngIf="reportForm.get('startdt').dirty && reportForm.get('startdt').invalid">
+                                  <span class="col-sm-2"></span>
+                                  <span class="col-sm-10" style="padding:4px 0 0">Por favor ingrese una fecha inicial</span>
+                                </div>
+                                <!--</div>-->
+                              </div>
+                              <!--<div class="col-sm-12 col-md-6">-->
+    
+                           </td>
+    
+    
+                          </tr>
+                          <tr class="info">
+                            <td>Fecha final</td>
+                            <td><div class="form-group" style="margin-right:0" [ngClass]="{'has-error': reportForm.get('enddt').invalid && reportForm.get('enddt').dirty}">
+                              <div class="input-group">
+                                <div class="input-group-addon"><i class="material-icons">looks_two</i></div>
+                                <input type="date" class="form-control" [formControl]="enddt" placeholder="End Date">
+                              </div>
+                              <div class="text-danger" *ngIf="reportForm.get('enddt').dirty && reportForm.get('enddt').invalid">
+                                <span class="col-sm-2"></span>
+                                <span class="col-sm-10" style="padding:4px 0 0">Por favor ingrese una fecha final</span>
+                              </div>
+                              <!--</div>-->
+                            </div></td>
+                          </tr>
+                          <tr class="warning">
+                            <td>Todos</td>
+                            <td><input type="radio" name="report" value="opt3" [formControl]="report"></td>
+                          </tr>
+                          </tbody>
+                        </table>
+                        <div class="col-sm-12">
+                          <button type="submit" class="btn btn-primary  btn-block" [disabled]="reportForm.invalid">Submit</button>
+                        </div>
+                      </div>
+    
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="card">
+    
+        <div class="panel panel-danger card-body" *ngIf="expenses && totalrows < 1">
+            <div class="panel-heading">
+                <h3 class="panel-title">No hay gastos encontrados</h3>
+            </div>
+    
+            <div class="panel-body">
+                Parece que no hay gastos ingresados para la criteria selecionada. Por favor ingrese sus gastos <a routerLink="/expense">aqui</a>.
+            </div>
+        </div>
+    </div>
+    <div class="card">
+    
+        <div class="panel panel-default " *ngIf="expenses && totalrows > 0">
+            <div class="panel-heading card-header">
+                <h3 class="panel-title">Reporte <i>{{reportTitle}}</i> <b>({{ exptotal?.total | currency: 'PEN':true }})</b></h3>
+            </div>
+            <div class="panel-body card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="10%"><a style="cursor:pointer" (click)="sortExpense('expensedate')">Fecha</a></th>
+                                <th width="20%"><a style="cursor:pointer" (click)="sortExpense('expensetype')">Cuenta</a></th>
+                                <th width="35%">Descripción</th>
+                                <th width="10%" class="text-right"><a style="cursor:pointer" (click)="sortExpense('expenseamt')">Amount</a></th>
+                                <th width="25%">Acion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor='let exp of expenses; let expIndex = index'>
+                                <td>{{ exp.expensedate | date: 'd MMM y'}}</td>
+                                <td>{{ exp.expensetype}}</td>
+                                <td>{{ exp.expensedesc}}</td>
+                                <td class="text-right">{{ exp.expenseamt | currency: 'PEN':true }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" aria-label="View" (click)="showExpense(exp._id)">
+                                            <i class="material-icons">visibility</i>
+                                    </button>
+                                    <button type="button" class="btn btn-warning " aria-label="Edit" (click)="editExpense(exp._id)">
+                                            <i class="material-icons">create</i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" aria-label="Delete" (click)="confirmDel(expIndex, exp._id)">
+                                            <i class="material-icons">clear</i>
+                                    </button>
+                                </td>
+                            </tr>
+    
+                        </tbody>
+                    </table>
+                </div>
+    
+                <div style="text-align:center" *ngIf="expenses && totalrows > 10">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li *ngFor="let item of createPager(pgCounter); let idx = index">
+                                <a [ngClass]="{'selected': qpage == idx + 1 }"class="selected" style="cursor:pointer" (click) = "setPage(idx + 1)">{{ idx + 1 }}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

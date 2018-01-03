@@ -1,0 +1,43 @@
+<div class="container pagecontainer ">
+    <div class="card">
+    <div class="page-header card-header">
+        <h1>View Expense</h1>
+    </div>
+    <form class="form-horizontal card-body">
+        <div class="form-group">
+            <label for="expdt" class="col-sm-2 control-label">Fecha</label>
+            <div class="input-group col-sm-12">
+                <div class="input-group-addon"><i class="material-icons">access_time</i></div>
+                <div class="form-ele">{{ expense?.expensedate | date: 'd MMM y' }}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exptyp" class="col-sm-2 control-label">Cuenta</label>
+            <div class="input-group col-sm-12">
+                <div class="input-group-addon"><i class="material-icons">create</i></div>
+                <div class="form-ele">{{ expense?.expensetype }}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="expamt" class="col-sm-2 control-label">Monto</label>
+            <div class="input-group col-sm-12">
+                <div class="input-group-addon"><strong>S/</strong></div>
+                <div class="form-ele">{{ expense?.expenseamt | currency: 'PEN':true }}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="expdesc" class="col-sm-2 control-label">Description</label>
+            <div class="input-group col-sm-12">
+                <div class="form-ele">{{ expense?.expensedesc }}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-12">
+                <button type="button" (click)="onBack()" class="btn btn-default btn-block">Back</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</div>

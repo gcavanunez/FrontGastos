@@ -1,0 +1,25 @@
+<div class="container pagecontainer">
+    <div class="page-header">
+        <h1 class="center">Inicio</h1>
+    </div>
+
+    <div class="jumbotron">
+        <h1 class="center">Aplicacion para medir sus gastos</h1>
+        <p class="center">Una aplicacion que usa Bootstrap 4, NODE Expres, Angular 4 y MongoDB</p>
+    </div>
+    <div class="jumbotron" *ngIf="authService.isLoggedIn()" >
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn btn-primary btn-block"  [routerLink]="['expense/report']">Reportes</button>
+                </div>
+                <div class="col-6">
+                        <button class="btn btn-success btn-block"  [routerLink]="['expense']">Nuevo Gasto</button>
+                    </div>
+            </div>
+        </div>
+            
+        </div>
+    
+
+</div>

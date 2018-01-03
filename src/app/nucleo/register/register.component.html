@@ -1,0 +1,116 @@
+<div class="container pagecontainer">
+    <div class="page-header center card-header">
+        <h1>Register</h1>
+    </div>
+    <div class="card">
+    <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)" class="form-horizontal card-body" novalidate autocomplete="off">
+        <div class="form-group" [ngClass]="{'has-error': registerForm.get('firstname').invalid && registerForm.get('firstname').dirty}">
+            <label for="fname" class="col-sm-2 control-label">Nombre<sup>*</sup></label>
+            <div class="input-group col-sm-12">
+                <div class="input-group-addon"><i class="material-icons">looks_one</i></div>
+                <input type="text" class="form-control" [formControl]="firstname" id="fname" placeholder="Nombre">
+            </div>
+            <div class="text-danger" *ngIf="registerForm.get('firstname').dirty && registerForm.get('firstname').errors">
+                <span class="col-sm-2"></span>
+                <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('firstname').errors.required">
+                    Por favor ingrese su nombre
+                </span>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': registerForm.get('lastname').invalid && registerForm.get('lastname').dirty}">
+            <label for="lname" class="col-sm-2 control-label">Apellido<sup>*</sup></label>
+            <div class="input-group col-sm-12">
+                <div class="input-group-addon"><i class="material-icons">looks_two</i></div>
+                <input type="text" class="form-control" [formControl]="lastname" id="lname" placeholder="Apellido">
+            </div>
+            <div class="text-danger" *ngIf="registerForm.get('lastname').dirty && registerForm.get('lastname').errors">
+                <span class="col-sm-2"></span>
+                <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('lastname').errors.required">
+                    Por favor ingrese su apellido
+                </span>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': registerForm.get('email').invalid && registerForm.get('email').dirty}">
+            <label for="email" class="col-sm-2 control-label">Email<sup>*</sup></label>
+            <div class="input-group col-sm-12">
+                <div class="input-group-addon"><i class="material-icons">looks_3</i></div>
+                <input type="text" class="form-control" [formControl]="email" id="email" placeholder="Email">
+            </div>
+            <div class="text-danger" *ngIf="registerForm.get('email').dirty && registerForm.get('email').errors">
+                <span class="col-sm-2"></span>
+                <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('email').invalid">
+                    Porfavor ingrese un email valido
+                </span>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': registerForm.get('username').invalid && registerForm.get('username').dirty}">
+            <label for="username" class="col-sm-2 control-label">Usuario<sup>*</sup></label>
+            <div class="input-group col-sm-12">
+                <div class="input-group-addon"><i class="material-icons">looks_4</i></div>
+                <input type="text" class="form-control" [formControl]="username" id="username" placeholder="Usuario">
+            </div>
+            <div class="text-danger" *ngIf="registerForm.get('username').dirty && registerForm.get('username').errors">
+                <span class="col-sm-2"></span>
+                <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('username').errors.required">
+                    Por favor ingrese su nombre de usuario
+                </span>
+                <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('username').errors.minlength">
+                    Su usuario tiene que tener minimo 3 caracteres
+                </span>
+                <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('username').errors.maxlength">
+                    Su usuario no puede tener mas de 16 caracteres
+                </span>
+            </div>
+        </div>
+
+         <div formGroupName="passwordGroup" [ngClass]="{'has-error': registerForm.get('passwordGroup').errors }">
+
+            <div class="form-group" [ngClass]="{'has-error': registerForm.get('passwordGroup.password').invalid && registerForm.get('passwordGroup.password').dirty}">
+                <label for="password" class="col-sm-2 control-label">Contraseña<sup>*</sup></label>
+                <div class="input-group col-sm-12">
+                    <div class="input-group-addon"><i class="material-icons">looks_5</i></div>
+                    <input type="password" class="form-control" [formControl]="password" id="password" placeholder="Contraseña">
+                </div>
+                <div class="text-danger"  *ngIf="registerForm.get('passwordGroup.password').dirty && registerForm.get('passwordGroup.password').errors">
+                    <span class="col-sm-2"></span>
+                    <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('passwordGroup.password').errors.required">
+                        Por favor ingrese su contraseña
+                    </span>
+                    <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('passwordGroup.password').errors.pattern">
+                        Contraseña tiene que tener una letra, un numero y un caracter especial
+                    </span>
+                </div>
+
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': registerForm.get('passwordGroup.retypepass').invalid && registerForm.get('passwordGroup.retypepass').dirty}">
+                <label for="retypepass" class="col-sm-3 control-label">Verificar Contraseña<sup>*</sup></label>
+                <div class="input-group col-sm-12">
+                    <div class="input-group-addon"><i class="material-icons">looks_6</i></div>
+                    <input type="password" class="form-control" [formControl]="retypepass" id="retypepass" placeholder="Verificar Contraseña">
+                </div>
+                <div class="text-danger" *ngIf="(registerForm.get('passwordGroup.retypepass').touched || registerForm.get('passwordGroup.retypepass').dirty) && (registerForm.get('passwordGroup.retypepass').errors || registerForm.get('passwordGroup').errors)">
+                    <span class="col-sm-2"></span>
+                    <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('passwordGroup.retypepass').errors?.required">
+                        Por favor confirme su contraseña
+                    </span>
+                    <span class="col-sm-10" style="padding:4px 0 0" *ngIf="registerForm.get('passwordGroup').errors?.mismatchedPassword">
+                        Contraseña no es la misma
+                    </span>
+                </div>
+            </div>
+
+         </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-6">
+                <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+            </div>
+            <div class="col-sm-12" style="text-align:right">
+                <sup>*</sup> requerido
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
